@@ -8,7 +8,7 @@ namespace AspNetCoreLearn.Controllers
         [Route("/")]
         public IActionResult Index()
         {
-            return Content("Welome to Home!");
+            return Content("Welome to Home!", "text/plain");
         }
     }
 }

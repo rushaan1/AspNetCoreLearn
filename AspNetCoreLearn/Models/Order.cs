@@ -15,6 +15,7 @@ namespace AspNetCoreLearn.Models
 
         [Required]
         [Range(1, int.MaxValue)]
+        [ProductsExistAttribute]
         double InvoicePrice { get; set; }
 
         [Required]
