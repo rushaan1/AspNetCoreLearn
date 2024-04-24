@@ -13,6 +13,7 @@ namespace AspNetCoreLearn.AdditionalAttributes
 
         public OrderDateAttribute(string minDate, string errM)
         {
+            Console.WriteLine("womp womp");
             this.minDate = Convert.ToDateTime(minDate);
             this.errM = errM;
         }
@@ -20,14 +21,20 @@ namespace AspNetCoreLearn.AdditionalAttributes
 
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            if (value != null) 
+            Console.WriteLine("womp womp1");
+            if (value != null)
             {
                 DateTime vv = (DateTime)value;
-                if (vv < minDate) 
+                if (vv < minDate)
                 {
+                    Console.WriteLine("womp womp2");
                     return new ValidationResult(errM);
                 }
                 return ValidationResult.Success;
+            }
+            else 
+            {
+                Console.WriteLine("Value is null!");
             }
             return null;
         }

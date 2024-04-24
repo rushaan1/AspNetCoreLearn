@@ -1,6 +1,8 @@
 ﻿using AspNetCoreLearn.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace AspNetCoreLearn.CustomModelBinders
 {
@@ -14,21 +16,25 @@ namespace AspNetCoreLearn.CustomModelBinders
         {
             if (value != null) 
             {
-                var vv = (int)value;
+                var vv = (double)value;
 
-                List<Product>? list = (validationContext.Items["Products"] as List<Product>);
-
-                int totalPrice = 0;
-                foreach (Product product in list) 
+                PropertyInfo? otherProperty = validationContext.ObjectType.GetProperty(nameof(Order.Products));
+                if (otherProperty != null) 
                 {
-                    totalPrice += (int) product.Price;
-                }
+                    List<Product> list = (List<Product>)otherProperty.GetValue(validationContext.ObjectInstance)!;
 
-                if (vv != totalPrice) 
-                {
-                    return new ValidationResult(errorMessage);
+                    int? totalPrice = 0;
+                    foreach (Product product in list)
+                    {
+                        totalPrice += (int?)product.Price * product.Quantity;
+                    }
+
+                    if (vv != totalPrice)
+                    {
+                        return new ValidationResult(errorMessage);
+                    }
+                    return ValidationResult.Success;
                 }
-                return ValidationResult.Success;
             }
             return null;
         }

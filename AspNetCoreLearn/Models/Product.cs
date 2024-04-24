@@ -5,16 +5,16 @@ namespace AspNetCoreLearn.Models
 {
     public class Product
     {
-        [Required]
+        [Required(ErrorMessage = "ProductCode is a required key!")]
         [Range(1, int.MaxValue)]
-        int ProductCode { get; set; }
+        public int? ProductCode { get; set; }
 
-        [Required]
-        [InvoicePriceAttribute()]
-        public double Price { get; set; }
+        [Required(ErrorMessage = "Price is a required key!")]
+        [Range(1, int.MaxValue)]
+        public double? Price { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Quantity is a required key!")]
         [Range(1,int.MaxValue)]
-        int Quantity { get; set; }
+        public int? Quantity { get; set; }
     }
 }
